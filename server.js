@@ -15,7 +15,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+// importing the routes
 require("./routing/api-Routes")(app);
 require("./routing/html-Routes")(app);
 

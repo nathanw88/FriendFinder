@@ -1,5 +1,7 @@
 var mysql = require("mysql")
 var express = require("express")
+
+//setting up connection
 var connection;
 if (process.env.JAWSDB_URL) {
 connection = mysql.createConnection(process.env.JAWSDB_URL);
@@ -13,7 +15,7 @@ var connection = mysql.createConnection({
 });
 }
 
-
+// connecting
 connection.connect(function(err) {
 if (err) {
   console.error("error connecting: " + err.stack);
@@ -22,7 +24,7 @@ if (err) {
 });
 
 
-
+// function to load the profile with a callback funcion to send the data back when finished
 function loadProfiles(cb) {
  
   connection.query("SELECT * FROM profiles", function(err, res) {
@@ -35,6 +37,8 @@ function loadProfiles(cb) {
     cb(friends)
   });
 }
+
+// function to add a new profile with arr holding the name and photo path, with a callback function to send back info on affected rows when finished.
 function addProfile(arr, cb){
   connection.query("INSERT INTO profiles (name, photo, scores) VALUES (?, ?, ?)", arr, function(err, res){
     if (err) throw err;
@@ -42,9 +46,8 @@ function addProfile(arr, cb){
     cb(res)
   });
 }
-
+// function for grabbing one profile first agrument is id of which profile to grab, second is call back function to send the bata from profile back.
 function returnMatch(primaryKey, cb) {
-  // Selects all of the data from the MySQL profiles table
   connection.query("SELECT * FROM profiles WHERE ?;",[{id: primaryKey}], function(err, res) {
     if (err) throw err;
   
@@ -56,7 +59,9 @@ function returnMatch(primaryKey, cb) {
   });
 }
 
+//exporting routes to be used by server.js
 module.exports = function(app) {
+  //route for showing all profiles to page
   app.get("/api/friends", function(req, res) {
     loadProfiles(function(data){
       return res.json(data)
@@ -64,6 +69,7 @@ module.exports = function(app) {
     });
   });
 
+  //route for adding new profile, and grabbing closest match to it.
   app.post("/api/friends", function(req, res){
    var newProfile = []
    var newScores = req.body.scores
