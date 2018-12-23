@@ -16,8 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-require(__dirname + "/routing/api-routes")(app);
-require(__dirname + "/routing/html-routes")(app);
+require("/routing/api-routes")(app);
+require("/routing/html-routes")(app);
 
 
 
