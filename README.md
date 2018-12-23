@@ -10,6 +10,9 @@ Take a look in package.json to see the requirement
 
 * **Nathan Walker** 
 
+## demo
+![gif demo](./gif/demo.gif)
+
 ## Acknowledgments
 
 the front end was copied over from homework sample
