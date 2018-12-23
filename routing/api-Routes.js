@@ -17,20 +17,20 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
 if (err) {
   console.error("error connecting: " + err.stack);
-  //once successfully connected, you may want to query your database for the info you'll need later!
+  
 }
 });
 
 
 
 function loadProfiles(cb) {
-  // Selects all of the data from the MySQL profiles table
+ 
   connection.query("SELECT * FROM profiles", function(err, res) {
     if (err) throw err;
-    //a fun trick for converting mysql's returned 'rowPacketData' obj into more usable JSON
+   
     var data = JSON.stringify(res);
     data = JSON.parse(data);
-    // loop over your data converting the string of numbers into an array (using split??)
+ 
     friends = data;
     cb(friends)
   });
@@ -47,10 +47,10 @@ function returnMatch(primaryKey, cb) {
   // Selects all of the data from the MySQL profiles table
   connection.query("SELECT * FROM profiles WHERE ?;",[{id: primaryKey}], function(err, res) {
     if (err) throw err;
-    //a fun trick for converting mysql's returned 'rowPacketData' obj into more usable JSON
+  
     var data = JSON.stringify(res);
     data = JSON.parse(data);
-    // loop over your data converting the string of numbers into an array (using split??)
+
     friend = data;
     cb(friend)
   });
